@@ -1,24 +1,47 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
-  setInterval(updateTime, 500);
+import CreateTodo from './components/create';
+import EditTodo from './components/update';
+import TodosList from './components/list';
 
-  const now = new Date().toLocaleTimeString();
-  const [time, setTime] = useState(now);
+import logo from './logo.png';
 
-  function updateTime() {
-    const newTime = new Date().toLocaleTimeString();
-    setTime(newTime);
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <div className="container-lg">
+          <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <img src={logo} width="30" height="30" alt="logo" />
+
+            <Link to="/" className="navbar-brand">
+              Todo App
+            </Link>
+            <div className="collpase nav-collapse ml-auto ">
+              <ul className="navbar-nav mr-auto">
+                <li className="navbar-item">
+                  <Link to="/" className="nav-link text-warning">
+                    Todos
+                  </Link>
+                </li>
+                <li className="navbar-item">
+                  <Link to="/add" className="nav-link text-warning">
+                    Create Todo
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <Route path="/" exact component={TodosList} />
+          <Route path="/update/:id" component={EditTodo} />
+          <Route path="/add" component={CreateTodo} />
+        </div>
+      </Router>
+    );
   }
-  return (
-    <div>
-      <h1>HIIIII THIS IS UT</h1>
-      <div className="container">
-        <h1>{time}</h1>
-        <button onClick={updateTime}>Get Time</button>
-      </div>
-    </div>
-  );
 }
 
 export default App;
